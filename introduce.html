@@ -8,6 +8,8 @@
         .introtext{
             font-size: 50px;
             text-align: center;
+
+            
         }
         
 
@@ -17,13 +19,14 @@
             padding: 10px;
             text-align: center;
             font-size: 50px;
-           
+            
            
         }
         .weighttext{
             font-size: 30px;
             text-align: center;
             background-color: rgb(200, 198, 128);
+            
         }
        
         .box1{
@@ -45,26 +48,50 @@
         border:1px solid #222; 
         border-collapse: collapse; 
         text-align: center;
+        margin: auto;
+       
         
     }
+
+      #container{
+            width: 400px;
+            height: 20px auto;
+        }
+        .time {
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+            color : rgba(43, 97, 0, 0.959);
+        }
+        ul{
+            font-size: 25px;
+        }
+        
+        
         
     </style>
 </head>
 <body>
-   
+   <div id="container">
+        <div class="time"></div>
+    </div>
+
    
  <table>
     <div class="introtext">자기소개</div>
- <img src = "../media/201606031647732854_2.jpg">
-
-    <h2 >야곱 (3)</h2>
-    <h3>곱슬머리, 먹보, 자는걸 좋아함 , 다이어트(유지중)</h3>
+ 
+    <div style="text-align: center; margin-top: 10px;">
+    <img src = "../media/갈색푸들.jpeg" alt="갈색푸들">
+    </div>
+  
+    <h1>야곱 (3)</h1>
+    <h2>곱슬머리, 먹보, 자는걸 좋아함 , 다이어트(유지중)</h2>
 
 </table>  
 <hr>
 <table>
 <h2 class="box1">경력</h2>
-<ul  >
+<ul>
 
     <li>신발 씹기 -3년</li>
     <li>음식 훔쳐 먹기 -1년</li>
@@ -88,7 +115,7 @@
                 
                 <section>
                
-                <table>
+                <table style="width: 100%;">
                   <div class="weighttext">야곱이의 넉달 간 몸무게 변화</div>
                   <thead>
                       <tr>
@@ -111,12 +138,27 @@
                   </tbody>
                 </table>
             </section>
-            </section>
+           
+
+
 
 </body>
 </html>
 
-</body>
-</html>
+    <script>
+    setInterval(()=>{
+        let datetime = new Date();
+        let obj = document.querySelector(".time");
+        let time = 
+            datetime.getHours() + " : "
+            + datetime.getMinutes() + " : "
+            + datetime.getSeconds(); 
+        obj.innerHTML = time;
+    }, 1000);
+</script>
+
+
+
+
 
 
