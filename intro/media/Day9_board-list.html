@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        table, tr, td, th{
+            border: 2px, solid black;
+            text-align: center;
+            padding: 5px 20px;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 테이블의 형태로 -->
+        <!-- 번호, 제목, 작성자, 조회수, 작성일(YY-MM-DD) -->
+        <table>
+            <tr>
+                <td>번호</td>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>조회수</td>
+                <td>작성일</td>
+            </tr>
+            <tr v-for = "item in list">        
+             <td>{{item.BOARDNO}}</td>
+             <td>{{item.TITLE}}</td>
+             <td>{{item.USERID}}</td>
+             <td>{{item.CNT}}</td>
+             <td>{{item.UPDATETIME}}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+                list : [],
+                info : {},
+                editMode : false
+
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnBoardList: function () {
+                $.ajax({
+                    url: "http://localhost:3009/list",
+                    dataType: "json",
+                    type: "GET",
+                    data: {},
+                    success: function (data) {
+                        console.log(data);
+                        self.list = data.list;
+                    }
+                });
+            },
+           
+           
+            fnEdit: function () {
+                let self = this;             
+                    return;
+            let param = {
+                   boardNo : self.info.BOARDNO,
+                    title: self.TITLE,
+                    userId: self.SERID,
+                    cnt : self.CNT,
+                    updateTime : self.UPDATETIME
+            }
+             $.ajax({
+                    url: "http://localhost:3009/list",
+                    dataType: "json",
+                    type: "GET",
+                    data: {},
+                    success: function (data) {
+                        console.log(data);
+                        self.list = data.list;
+                    }
+                });
+        }, //methods
+
+
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+        }
+    });
+
+    app.mount('#app');
+</script>

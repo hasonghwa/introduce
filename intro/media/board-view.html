@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        #container{
+            width: 600px;
+            margin: 10px auto;
+        }
+         table, tr, td, th{
+            border: 2px, solid black;
+            text-align: center;
+            padding: 5px 20px;
+            border-collapse: collapse;
+        }
+        th{
+            background-color: aqua;
+        }
+       botton{
+        margin-top: 5px;
+        margin-right: 5px;
+       }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id = "container:">
+        <table>
+            <tr>
+                <th>제목</th>
+                <th>{{info.TITLE}}</th>
+             
+            </tr>
+             <tr>
+                <th>작성자</th>
+                <th>{{info.USERID}}</th>
+             
+            </tr>
+            <tr>
+                <th>작성일</th>
+                <th>{{info.CTIME}}</th>
+             
+            </tr>
+            <tr>
+                <th>조회수</th>
+                <th>{{info.CNT}}</th>
+             
+            </tr>
+            <tr>
+                <th>내용</th>
+                <th>{{info.CONTENTS}}</th>
+             
+            </tr>
+        </div>
+        </table>
+        <div>
+            <button>수정</button>
+            <button @click = "fnRemove">삭제</button> 
+            <!--삭제 후 리스트 페이지로-->
+            <!-- 삭제 주소는 /board/delete -->
+            <button @click = "fnList">목록으로</button>  <!--리스트 페이지로 -->
+        </div>
+        
+    </div>
+</body>
+</html>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+                boardNo : "",
+                info : {},
+                editMode : false,
+                title : "",
+                userId : "",
+                contents : ""
+
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnBoardInfo: function () {
+                let self = this;
+                $.ajax({
+                    url: "http://localhost:3009/board/view",
+                    dataType: "json",
+                    type: "GET",
+                    data: {boardNo : self.boardNo},
+                    success: function (data) {
+                        console.log(data[0]);
+                        self.info = data[0];
+                    }
+                });
+            },
+            
+            fnRemove : function(title){
+                let self =this;
+                if(confirm("정말 삭제?")){
+                    return;
+                }
+            }
+            $.ajax({
+                    url: "http://localhost:3009/board/delete",
+                    dataType: "json",
+                    type: "GET",
+                    data: {tiltle : title},
+                    success: function (data) {
+                       alert("삭제되었습니다");
+                        self.fnBoardInfo();
+                    }
+                });
+           
+            
+            
+        },
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+        const queryParams = new URLSearchParams(window.location.search);
+        this.boardNo = queryParams.get('boardNo') || ''; 
+        console.log("boardNo ==> 2", this.boardNo );
+        let self = this;
+        
+        this.fnBoardInfo();
+        }
+    });
+
+    app.mount('#app');
+</script>
